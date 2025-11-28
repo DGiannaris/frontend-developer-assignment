@@ -31,3 +31,71 @@ As a user, I can
 - We don't expect a full test coverage, but a couple of unit tests would be nice to have
 - Fork the repo to your own account, make it public and send us the repo url when you are completed. We will
   clone and run the site on our local.
+
+---
+
+# My implementation
+
+I tried to keep things simple and finish within the 3-hour window. I managed to complete most of the requirements, with one exception:
+
+**Not implemented:**
+> Enter any email in the autocomplete. If the email passes validation it is possible to add it to the list of available recipients
+
+I figured it is better to fully polish the existing features rather than deliver the last one with less shine overall
+
+### State management
+
+I went with React Context + `useState` since the app's state is pretty straightforward. The whole state lives in a single `recipients` array where each item has an `isSelected` flag to track whether it's been picked or not, staying close to the original source of truth
+
+The data comes from the `recipientsData.json` file directly, but if this were a real app hitting an API, I'd probably reach for TanStack Query or something similarinstead of wiring up `useEffect` manually
+
+### Styling
+
+I used `Tailwind CSS` for styling with `shadcn/ui`. It's fast to work with, I'm familiar with it and has the added benefit of keeping the components in the codebase
+
+The design is minimal and functional. Nothing fancy, but something easy on the eyes
+
+### Some of the features
+
+- **Domain grouping**: Recipients are grouped by their email domain
+- **Expandable groups**: Domains with multiple emails show up as expandable groups
+- **Bulk operations**: You can select/remove an entire domain at once by clicking on the domain name
+- **Searching**: You can search for a recipient by domain name
+
+### Testing
+
+I added a few unit tests covering:
+
+- `RecipientsProvider.test.tsx` - Tests the context provider (selecting, removing, initial state)
+- `ExpandableRecipients.test.tsx` - Tests the expandable component behavior (toggle, callbacks)
+- `groupRecipientsByDomain.test.ts` - Tests the grouping utility function
+
+Not full coverage by any means, but enough to show the testing approach
+
+### Project structure
+
+```
+src/
+├── components/
+│   └── ui/           # Reusable shadcn components (Button, Input)
+├── features/
+│   └── recipients/
+│       ├── providers/    # React Context for state
+│       ├── utils/        # Helper functions
+│       └── ...           # Feature components
+└── lib/
+    └── utils.ts      # Tailwind merge utility
+```
+
+### Running the project
+
+```bash
+yarn install
+yarn start
+```
+
+### Running tests
+
+```bash
+yarn test
+```
