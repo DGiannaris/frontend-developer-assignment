@@ -1,5 +1,12 @@
-import { ReactComponent as TimescaleLogo } from "../assets/logo.svg";
+import { RecipientsManagement } from "../features/recipients/RecipientsManagement";
+import { RecipientsProvider } from "../features/recipients/providers/RecipientsProvider";
 
-const App = () => <TimescaleLogo />;
+function App() {
+  return (
+    <RecipientsProvider>
+      <RecipientsManagement />
+    </RecipientsProvider>
+  );
+}
 
 export default App;
